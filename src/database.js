@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
-
+require("pg")
 // Configurar o Sequelize
-const sequelize = new Sequelize("",{dialect: 'postgres'});
+const sequelize = new Sequelize("postgres://lsvdnkha:yp7f-3mY1zeFcZauDRltyuau0RNI6GXi@tuffi.db.elephantsql.com/lsvdnkha",{dialect: 'postgres'});
 
 
 // Definir um modelo para uma tabela chamada 'Usuarios'
