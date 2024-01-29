@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config(); 
 const md5 = require("md5")
 
-const app = express();
 const rota = express.Router()
 
 async function register( user, senha){
@@ -24,11 +23,12 @@ async function register( user, senha){
         }
     }
     const pool = new Pool(config)
+    console.log(user + '    '+senha)
     try {
-        const resultados = await pool.query('SELECT id FROM Usuario WHERE usuario = '+user+' AND senha = '+senha);
-        console(res.json(resultados.rows))
+        const resultados = await pool.query('SELECT * FROM "Usuarios" AS "Usuarios"  WHERE "Usuarios"."usuario" = '+user.toString()+' AND "Usuarios"."senha" = '+senha.toString());
+        console.log(resultados.rows)
         //var token = jwt.sign({payload: { id_f:funcionario[0].dataValues.id, id_empresa: funcionario[0].dataValues.id_empresa}}, process.env.PRIVATE_KEY)
-        //return {status:"ok", token:token}
+        return {status:"ok"}
     } catch (error) {
         console.error('Erro na consulta ao banco de dados:', error);
     }

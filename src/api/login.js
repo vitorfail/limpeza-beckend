@@ -4,8 +4,7 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config(); 
 const md5 = require("md5")
 
-const app = express();
-const rota = express.Router()
+const rota2 = express.Router()
 
 async function login( user, senha){
     var config = {}
@@ -35,7 +34,7 @@ async function login( user, senha){
 }
 
 
-rota.post('/',async (req, res)=>{
+rota2.post('/',async (req, res)=>{
     try{
         var result = await login(req.body.user,req.body.user)
         res.status(200).send({result:result})     
@@ -44,4 +43,4 @@ rota.post('/',async (req, res)=>{
         res.status(500).send({result:error})
     }
 })
-module.exports = rota
+module.exports = rota2
