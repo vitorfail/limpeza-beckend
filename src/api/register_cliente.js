@@ -5,7 +5,7 @@ const md5 = require("md5")
 
 const rota = express.Router()
 
-async function register( user, senha){
+async function registro_cliente(id, nome, email, pos_x, pos_y){
     var config = {}
     if(process.env.URL === ""){
         config= {
@@ -25,14 +25,16 @@ async function register( user, senha){
     console.log(user + '    '+senha)
     try {
         const f = 'df'
-        const resultados = await pool.query("SELECT id FROM Usuarios WHERE usuario= '"+ user.toString()+"' AND senha = '"+md5(senha.toString())+"' ");
-        if(resultados.rows.length == 0){
-            const result = await pool.query("INSERT INTO Usuarios(usuario, senha) VALUES ('"+user.toString()+"', '"+md5(senha.toString())+"') RETURNING id")
-            return {status:"ok"}
-        }
-        else{
+        const resultados = await pool.query("SELECT * FROM Clientes WHERE id_empresa= '"+id+"' AND nome = '"+nome+"' AND email = '"+email+"'");
+        if(resultados.rows.length>0){
             return {status:"EXIST"}
         }
+        else{
+            const q = "INSER INTO Clientes(id_empresa, nome, email, pos_x, pos_y) VALUES($1, $2, $3, $4, $5) id_empresa= '"+id+"' AND nome = '"+nome+"' AND email = '"+email+"'"
+            const resultados = await pool.query(q, [id, nome, email, pos_x, pos_y]);
+            return {status:"ok"}
+        }
+        
     } catch (error) {
         return {status:0, error:'Erro na consulta ao banco de dados:'+ error}
     }
@@ -41,8 +43,12 @@ async function register( user, senha){
 
 rota.post('/',async (req, res)=>{
     try{
-        var result = await register(req.body.user,req.body.senha)
-        res.status(200).send({result:result})     
+        if(check(req)){
+            var h = req.headers.authorization.replace('Bearer ', '')
+            var decode = jwt.decode(h)
+            var result = await registro_cliente(req.body.nome, req.body.email, decode.payload.id_empresa)
+            res.status(200).send({result:result})
+        }     
     }
     catch{
         res.status(500).send({result:error})
