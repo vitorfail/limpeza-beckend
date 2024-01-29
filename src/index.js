@@ -4,6 +4,8 @@ const port = 8080; // Escolha a porta que desejar
 const login = require("./api/login")
 const register = require("./api/register")
 const bodyParser = require("body-parser")
+const criar = require("./criar_banco")
+
 
 
 
@@ -23,6 +25,7 @@ app.get('/', async (req, res) => {
   });
 app.use("/api/login", login)
 app.use("/api/cadastro", register)
+app.use("/api/criar", criar)
 
 app.listen(port, () => {
     console.log(`Servidor está ouvindo na porta ${port}`);

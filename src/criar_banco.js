@@ -1,12 +1,10 @@
 const express = require('express');
 const { Pool } = require('pg');
-const jwt = require("jsonwebtoken");
 require('dotenv').config(); 
-const md5 = require("md5")
 
 const rota = express.Router()
 
-async function register( user, senha){
+async function criar(){
     var config = {}
     if(process.env.URL === ""){
         config= {
@@ -23,17 +21,9 @@ async function register( user, senha){
         }
     }
     const pool = new Pool(config)
-    console.log(user + '    '+senha)
     try {
-        const f = 'df'
-        const resultados = await pool.query("SELECT id FROM Usuarios WHERE usuario= '"+ user.toString()+"' AND senha = '"+senha.toString()+"' ");
-        if(resultados.rows.length == 0){
-            const result = await pool.query("INSERT INTO Usuarios(usuario, senha) VALUES ('"+user.toString()+"', '"+senha.toString()+"') RETURNING id")
-            return {status:"ok"}
-        }
-        else{
-            return {status:"EXIST"}
-        }
+        const resultados = await pool.query('CREATE TABLE Usuarios ( id SERIAL PRIMARY KEY, usuario VARCHAR(255) UNIQUE NOT NULL, senha VARCHAR(255) NOT NULL)');
+        return {status:"ok"}
     } catch (error) {
         console.error('Erro na consulta ao banco de dados:', error);
     }
@@ -42,7 +32,7 @@ async function register( user, senha){
 
 rota.post('/',async (req, res)=>{
     try{
-        var result = await register(req.body.user,req.body.senha)
+        var result = await criar()
         res.status(200).send({result:result})     
     }
     catch{

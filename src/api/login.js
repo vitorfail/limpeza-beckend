@@ -24,19 +24,20 @@ async function login( user, senha){
     }
     const pool = new Pool(config)
     try {
-        const resultados = await pool.query('SELECT id FROM Usuario WHERE usuario = '+user+' AND senha = '+senha);
-        console(res.json(resultados.rows))
-        //var token = jwt.sign({payload: { id_f:funcionario[0].dataValues.id, id_empresa: funcionario[0].dataValues.id_empresa}}, process.env.PRIVATE_KEY)
-        //return {status:"ok", token:token}
+        const resultados = await pool.query("SELECT id FROM Usuarios WHERE usuario = '"+user.toString()+"' AND senha = '"+senha.toString()+"'");
+        console.log(resultados.rows[0].id)
+        var token = jwt.sign({payload: { id:resultados.rows[0].id}}, process.env.PRIVATE_KEY)
+        return {status:"ok", token:token}
     } catch (error) {
         console.error('Erro na consulta ao banco de dados:', error);
+        return {status:0, token:token}
     }
 }
 
 
 rota2.post('/',async (req, res)=>{
     try{
-        var result = await login(req.body.user,req.body.user)
+        var result = await login(req.body.user,req.body.senha)
         res.status(200).send({result:result})     
     }
     catch{
