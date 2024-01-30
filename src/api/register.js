@@ -1,7 +1,8 @@
 const express = require('express');
 const { Pool } = require('pg');
 require('dotenv').config(); 
-const md5 = require("md5")
+const md5 = require("md5");
+const { BaseError } = require('sequelize');
 
 const rota = express.Router()
 
@@ -33,7 +34,7 @@ async function register( user, senha){
             return {status:"EXIST"}
         }
     } catch (error) {
-        console.log(error)
+        console.log(BaseError)
         return {status:0, error:'Erro na consulta ao banco de dados:'+ error}
     }
 }
