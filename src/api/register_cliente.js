@@ -30,7 +30,7 @@ async function registro_cliente(id, nome, email, telefone, pos_x, pos_y){
             return {status:"EXIST"}
         }
         else{
-            const q = "INSER INTO Clientes(id_empresa, nome, email, telefone, pos_x, pos_y) VALUES($1, $2, $3, $4, $5, $6) id_empresa= '"+id+"' AND nome = '"+nome+"' AND email = '"+email+"'"
+            const q = "INSERT INTO Clientes(id_empresa, nome, email, telefone, pos_x, pos_y) VALUES($1, $2, $3, $4, $5, $6) "
             const resultados = await pool.query(q, [id, nome, email, telefone,pos_x, pos_y]);
             return {status:"ok"}
         }

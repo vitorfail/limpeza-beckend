@@ -27,6 +27,7 @@ async function home(id){
     const pool = new Pool(config)
     try {
         const resultados = await pool.query("SELECT * FROM Clientes WHERE id_empresa= '"+id+"'");
+        const resultados_pos = await pool.query("SELECT MIN(pos_x) AS menor_x, MAX(pos_x) AS maior_x, MIN(pos_y) AS menor_y, MAX(pos_y) AS maior_y FROM Clientes WHERE id_empresa= '"+id+"'");
         if(resultados.rows >0){
             var pontos = []
             for(var i =0; 1<resultados.rows.length;i++){
@@ -35,7 +36,17 @@ async function home(id){
                     y:resultados.rows[i].pos_y
                 }
                 pontos.push(p)
-            } 
+            }
+            return {status:"ok", result:{
+                total:resultados.rows.length, 
+                cliente_prox:"Nenhum", 
+                cliente_long:"Nenhum", 
+                pontos:pontos,
+                x1:resultados_pos.rows.menor_x,
+                x2:resultados_pos.rows.maior_x,
+                y1:resultados_pos.rows.menor_y,
+                y2:resultados_pos.rows.maior_y
+            }} 
         }
         else{
             return {status:"ok", result:{total:0, cliente_prox:"Nenhum", cliente_long:"Nenhum", pontos:[{x:0, y:0}]}}
