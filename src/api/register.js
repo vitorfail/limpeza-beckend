@@ -22,7 +22,6 @@ async function register( user, senha){
         }
     }
     const pool = new Pool(config)
-    console.log(user + '    '+senha)
     try {
         const f = 'df'
         const resultados = await pool.query("SELECT id FROM Usuarios WHERE usuario= '"+ user.toString()+"' AND senha = '"+md5(senha.toString())+"' ");
@@ -34,6 +33,7 @@ async function register( user, senha){
             return {status:"EXIST"}
         }
     } catch (error) {
+        console.log(error)
         return {status:0, error:'Erro na consulta ao banco de dados:'+ error}
     }
 }

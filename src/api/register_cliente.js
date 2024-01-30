@@ -1,7 +1,8 @@
 const express = require('express');
 const { Pool } = require('pg');
-require('dotenv').config(); 
-const md5 = require("md5")
+require('dotenv').config();
+const check = require("../checkUser") 
+const jwt = require("jsonwebtoken")
 
 const rota = express.Router()
 
@@ -22,7 +23,6 @@ async function registro_cliente(id, nome, email, telefone, pos_x, pos_y){
         }
     }
     const pool = new Pool(config)
-    console.log(user + '    '+senha)
     try {
         const f = 'df'
         const resultados = await pool.query("SELECT * FROM Clientes WHERE id_empresa= '"+id+"' AND nome = '"+nome+"' AND email = '"+email+"'");
@@ -36,6 +36,7 @@ async function registro_cliente(id, nome, email, telefone, pos_x, pos_y){
         }
         
     } catch (error) {
+        console.log(error)
         return {status:0, error:'Erro na consulta ao banco de dados:'+ error}
     }
 }
@@ -46,11 +47,12 @@ rota.post('/',async (req, res)=>{
         if(check(req)){
             var h = req.headers.authorization.replace('Bearer ', '')
             var decode = jwt.decode(h)
-            var result = await registro_cliente(req.body.nome, req.body.email, decode.payload.id_empresa)
+            var result = await registro_cliente(decode.payload.id_empresa, req.body.nome, req.body.email, req.body.x,req.body.y)
             res.status(200).send({result:result})
         }     
     }
-    catch{
+    catch(error){
+        console.log(error)
         res.status(500).send({result:error})
     }
 })

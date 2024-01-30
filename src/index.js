@@ -6,6 +6,7 @@ const register = require("./api/register")
 const bodyParser = require("body-parser")
 const criar = require("./criar_banco")
 const home = require("./api/Home")
+const cadastro_cliente = require("./api/register_cliente")
 
 
 
@@ -29,6 +30,7 @@ app.use("/api/login", login)
 app.use("/api/cadastro", register)
 app.use("/api/criar", criar)
 app.use("/api/home", home)
+app.use("/api/cadastro_cliente", cadastro_cliente)
 
 app.listen(port, () => {
     console.log(`Servidor está ouvindo na porta ${port}`);

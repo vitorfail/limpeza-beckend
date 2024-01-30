@@ -52,7 +52,6 @@ rota.post('/',async (req, res)=>{
         if(check(req)){
             var h = req.headers.authorization.replace('Bearer ', '')
             var decode = jwt.decode(h)
-            console.log(decode)
             var result = await home(decode.payload.id)
             res.status(200).send({result:result})
         }     
