@@ -5,6 +5,8 @@ const login = require("./api/login")
 const register = require("./api/register")
 const bodyParser = require("body-parser")
 const criar = require("./criar_banco")
+const home = require("./api/Home")
+
 
 
 
@@ -26,6 +28,7 @@ app.get('/', async (req, res) => {
 app.use("/api/login", login)
 app.use("/api/cadastro", register)
 app.use("/api/criar", criar)
+app.use("/api/home", home)
 
 app.listen(port, () => {
     console.log(`Servidor está ouvindo na porta ${port}`);
