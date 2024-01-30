@@ -38,7 +38,6 @@ async function register( user, senha){
     }
 }
 
-
 rota.post('/',async (req, res)=>{
     try{
         var result = await register(req.body.user,req.body.senha)

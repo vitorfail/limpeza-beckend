@@ -5,7 +5,7 @@ const md5 = require("md5")
 
 const rota = express.Router()
 
-async function registro_cliente(id, nome, email, pos_x, pos_y){
+async function registro_cliente(id, nome, email, telefone, pos_x, pos_y){
     var config = {}
     if(process.env.URL === ""){
         config= {
@@ -30,8 +30,8 @@ async function registro_cliente(id, nome, email, pos_x, pos_y){
             return {status:"EXIST"}
         }
         else{
-            const q = "INSER INTO Clientes(id_empresa, nome, email, pos_x, pos_y) VALUES($1, $2, $3, $4, $5) id_empresa= '"+id+"' AND nome = '"+nome+"' AND email = '"+email+"'"
-            const resultados = await pool.query(q, [id, nome, email, pos_x, pos_y]);
+            const q = "INSER INTO Clientes(id_empresa, nome, email, telefone, pos_x, pos_y) VALUES($1, $2, $3, $4, $5, $6) id_empresa= '"+id+"' AND nome = '"+nome+"' AND email = '"+email+"'"
+            const resultados = await pool.query(q, [id, nome, email, telefone,pos_x, pos_y]);
             return {status:"ok"}
         }
         
