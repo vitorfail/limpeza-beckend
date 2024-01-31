@@ -35,7 +35,7 @@ async function pesquisa(id, valor, op){
             }
         }
         if(op == "numero"){
-            const resultados = await pool.query("SELECT nome, email, telefone FROM Clientes WHERE id_empresa= "+id+" AND numero ILIKE  '%"+ valor+"%'");
+            const resultados = await pool.query("SELECT nome, email, telefone FROM Clientes WHERE id_empresa= "+id+" AND telefone ILIKE  '%"+ valor+"%'");
             if(resultados.rows.length >0){
                 return {status:"ok", result:resultados.rows}
             }
@@ -44,7 +44,7 @@ async function pesquisa(id, valor, op){
             }
         }
         if(op == "telefone"){
-            const resultados = await pool.query("SELECT nome, email, telefone FROM Clientes WHERE id_empresa= "+id+" AND telefone ILIKE  '%"+ valor+"%'");
+            const resultados = await pool.query("SELECT nome, email, telefone FROM Clientes WHERE id_empresa= "+id+" AND email ILIKE '%"+ valor+"%'");
             if(resultados.rows.length >0){
                 return {status:"ok", result:resultados.rows}
             }
