@@ -28,7 +28,6 @@ async function login( user, senha){
         var token = jwt.sign({payload: { id:resultados.rows[0].id}}, process.env.PRIVATE_KEY)
         return {status:"ok", token:token}
     } catch (error) {
-        console.error('Erro na consulta ao banco de dados:', error);
         return {status:0, error:error}
     }
 }

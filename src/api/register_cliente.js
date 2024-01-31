@@ -24,8 +24,7 @@ async function registro_cliente(id, nome, email, telefone, pos_x, pos_y){
     }
     const pool = new Pool(config)
     try {
-        const f = 'df'
-        const resultados = await pool.query("SELECT * FROM Clientes WHERE id_empresa= '"+id+"' AND nome = '"+nome+"' AND email = '"+email+"'");
+        const resultados = await pool.query("SELECT * FROM Clientes WHERE id_empresa= "+id+"  AND email = '"+email+"'");
         if(resultados.rows.length>0){
             return {status:"EXIST"}
         }
@@ -36,7 +35,6 @@ async function registro_cliente(id, nome, email, telefone, pos_x, pos_y){
         }
         
     } catch (error) {
-        console.log(error)
         return {status:0, error:'Erro na consulta ao banco de dados:'+ error}
     }
 }
@@ -47,7 +45,7 @@ rota.post('/',async (req, res)=>{
         if(check(req)){
             var h = req.headers.authorization.replace('Bearer ', '')
             var decode = jwt.decode(h)
-            var result = await registro_cliente(decode.payload.id_empresa, req.body.nome, req.body.email, req.body.x,req.body.y)
+            var result = await registro_cliente(decode.payload.id, req.body.nome, req.body.email, req.body.telefone, req.body.x,req.body.y)
             res.status(200).send({result:result})
         }     
     }

@@ -8,7 +8,6 @@ const check = require('../checkUser');
 const rota = express.Router()
 
 async function home(id){
-    console.log(id)
     var config = {}
     if(process.env.URL === ""){
         config= {
@@ -26,11 +25,12 @@ async function home(id){
     }
     const pool = new Pool(config)
     try {
-        const resultados = await pool.query("SELECT * FROM Clientes WHERE id_empresa= '"+id+"'");
-        const resultados_pos = await pool.query("SELECT MIN(pos_x) AS menor_x, MAX(pos_x) AS maior_x, MIN(pos_y) AS menor_y, MAX(pos_y) AS maior_y FROM Clientes WHERE id_empresa= '"+id+"'");
-        if(resultados.rows >0){
+        const resultados = await pool.query("SELECT * FROM Clientes WHERE id_empresa= "+id+"");
+        const resultados_pos = await pool.query("SELECT MIN(pos_x) AS menor_x, MAX(pos_x) AS maior_x, MIN(pos_y) AS menor_y, MAX(pos_y) AS maior_y FROM Clientes WHERE id_empresa= "+id);
+        if(resultados.rows.length >0){
+
             var pontos = []
-            for(var i =0; 1<resultados.rows.length;i++){
+            for(var i =0; i<resultados.rows.length;i++){
                 var p = {
                     x:resultados.rows[i].pos_x,
                     y:resultados.rows[i].pos_y
@@ -42,10 +42,10 @@ async function home(id){
                 cliente_prox:"Nenhum", 
                 cliente_long:"Nenhum", 
                 pontos:pontos,
-                x1:resultados_pos.rows.menor_x,
-                x2:resultados_pos.rows.maior_x,
-                y1:resultados_pos.rows.menor_y,
-                y2:resultados_pos.rows.maior_y
+                x1:resultados_pos.rows[0].menor_x,
+                x2:resultados_pos.rows[0].maior_x,
+                y1:resultados_pos.rows[0].menor_y,
+                y2:resultados_pos.rows[0].maior_y
             }} 
         }
         else{
