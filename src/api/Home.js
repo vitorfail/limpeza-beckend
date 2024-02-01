@@ -49,9 +49,8 @@ async function home(id){
             }} 
         }
         else{
-            return {status:"ok", result:{total:0, cliente_prox:"Nenhum", cliente_long:"Nenhum", pontos:[{x:0, y:0}]}}
+            return {status:"ok", result:{total:0, cliente_prox:"Nenhum", cliente_long:"Nenhum", pontos:[{x:0, y:0}], x1:0, x2:0, y1:0, y2:0}}
         }
-        return {status:"ok", result:resultados}
     } catch (err) {
         return {status:0, error:err}
     }
