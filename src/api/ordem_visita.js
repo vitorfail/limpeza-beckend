@@ -25,23 +25,9 @@ async function ordem(id){
     }
     const pool = new Pool(config)
     try {
-        const resultados = await pool.query("SELECT nome, pos_x,  pos_y FROM Clientes WHERE id_empresa= "+id+"");
+        const resultados = await pool.query("SELECT nome,distancia as dist FROM Clientes WHERE id_empresa= "+id+" ORDER BY distancia ASC");
         if(resultados.rows.length >0 ){
-            var distancias = []
-            for(var i =0; i < resultados.rows.length;i++ ){
-                const x1 = 0;
-                const y1 = 0;
-                const x2 =resultados.rows[i].pos_x;
-                const y2 = resultados.rows[i].pos_y;
-
-// Calculando a distância usando a fórmula da distância Euclidiana
-                const distancia = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-                distancias.push({nome:resultados.rows[i].nome, dist:distancia})
-            }
-            function compararPorChave(a, b) {
-                return a.dist - b.dist;
-            }
-            return {status:"ok", result:distancias.sort(compararPorChave)}
+            return {status:"ok", result:resultados.rows}
         }
         else{
             return {status:"ok", result:[]}

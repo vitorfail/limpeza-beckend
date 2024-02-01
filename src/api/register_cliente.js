@@ -29,8 +29,15 @@ async function registro_cliente(id, nome, email, telefone, pos_x, pos_y){
             return {status:"EXIST"}
         }
         else{
-            const q = "INSERT INTO Clientes(id_empresa, nome, email, telefone, pos_x, pos_y) VALUES($1, $2, $3, $4, $5, $6) "
-            const resultados = await pool.query(q, [id, nome, email, telefone,pos_x, pos_y]);
+            const x1 = 0;
+            const y1 = 0;
+            const x2 =pos_x;
+            const y2 = pos_y;
+
+            const distancia = Math.round(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
+
+            const q = "INSERT INTO Clientes(id_empresa, nome, email, telefone, pos_x, pos_y, distancia) VALUES($1, $2, $3, $4, $5, $6, $7) "
+            const resultados = await pool.query(q, [id, nome, email, telefone,pos_x, pos_y, distancia]);
             return {status:"ok"}
         }
         

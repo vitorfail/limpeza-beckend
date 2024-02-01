@@ -23,7 +23,7 @@ async function criar(){
     const pool = new Pool(config)
     try {
         const usuario = await pool.query('CREATE TABLE Usuarios ( id SERIAL PRIMARY KEY, usuario VARCHAR(255) UNIQUE NOT NULL, senha VARCHAR(255) NOT NULL)');
-        const cliente = await pool.query('CREATE TABLE Clientes ( id SERIAL PRIMARY KEY, id_empresa INTEGER, nome VARCHAR(255), email VARCHAR(255) NOT NULL, telefone VARCHAR(255) NOT NULL, pos_x INTEGER, pos_y INTEGER )');
+        const cliente = await pool.query('CREATE TABLE Clientes ( id SERIAL PRIMARY KEY, id_empresa INTEGER, nome VARCHAR(255), email VARCHAR(255) NOT NULL, telefone VARCHAR(255) NOT NULL, pos_x INTEGER, pos_y INTEGER, distancia INTEGER )');
         return {status:"ok"}
     } catch (error) {
         console.error('Erro na consulta ao banco de dados:', error);
