@@ -25,7 +25,8 @@ async function login( user, senha){
     const pool = new Pool(config)
     try {
         const resultados = await pool.query("SELECT id FROM Usuarios WHERE usuario = '"+user.toString()+"' AND senha = '"+md5(senha.toString())+"'");
-        if(resultados.rows>0){
+        console.log(resultados.rows)
+        if(resultados.rows.length>0){
             var token = jwt.sign({payload: { id:resultados.rows[0].id}}, process.env.PRIVATE_KEY)
             return {status:"ok", token:token}    
         }
