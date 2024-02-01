@@ -12,11 +12,17 @@ Esse comando fará com que as dependências necessárias sejam instaladas.
 Vá na pasta raiz do projeto e crie um arquivo chamado `.env`. E nele escreva as seguintes variáveis
 
 `URL = "URL-DO-BANCO"`
+
 `USER= 'seu-usuario'`
+
 `HOST= 'localhost'`
+
 `PRIVATE_KEY = "SUA-CHAVE"`
+
 `DATABASE= 'seu-banco-de-dados'`
+
 `PASSWORD= 'sua-senha'`
+
 `PORT= 7000`
 
 O beckend esta configurado para tentar se conectar primeiramente a `url`. Caso o espaço da url estaja vazio (`""`) ele então tentara se conectar 
