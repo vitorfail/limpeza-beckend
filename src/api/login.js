@@ -30,8 +30,9 @@ async function login( user, senha){
             return {status:"ok", token:token}    
         }
         else{
-            return {status:2, token:token}    
+            return {status:2, token:""}    
         }
+
     } catch (error) {
         return {status:0, error:error}
     }
