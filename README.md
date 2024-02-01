@@ -4,12 +4,12 @@ Esse projeto foi feito usando nodejs
 
 # Como usar
 
-Clone esse repositório git no seu computador, então acesse a pasta e execute o o comando `npm install --only=dev`.
+Clone esse repositório git no seu computador, então acesse a pasta e execute o comando `npm install --only=dev`.
 Esse comando fará com que as dependências necessárias sejam instaladas.
 
 # Variáveis de ambiente
 
-Vá pasta raiz do projeto e crie um arquvi chamado `.env`. E nele escreva as seguintes variáveis
+Vá na pasta raiz do projeto e crie um arquivo chamado `.env`. E nele escreva as seguintes variáveis
 
 `URL = "URL-DO-BANCO"`
 `USER= 'seu-usuario'`
